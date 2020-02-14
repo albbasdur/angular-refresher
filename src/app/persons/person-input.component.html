@@ -1,0 +1,9 @@
+<label for="name">Name</label>
+<!--
+<input type="text" id="name" #personNameEl>
+<button (click)="onCreatePerson(personNameEl.value)">Create</button>
+-->
+
+<!-- Two-way binding -->
+<input type="text" id="name" [(ngModel)]="enteredPersonName">
+<button (click)="onCreatePerson()">Create</button>
