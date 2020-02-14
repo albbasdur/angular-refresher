@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 export class PersonsComponent implements OnInit, OnDestroy{
   // @Input() personList: string[];
   personList: string[];
+  isFetching = false;
   // private personService: PersonsService;
   private personListSubs: Subscription;
 
@@ -24,13 +25,19 @@ export class PersonsComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit() {
-    this.personList = this.prsService.persons;
+    // Commented because we will use HttpClient -> swapi.co
+    // this.personList = this.prsService.persons;
+    // this.prsService.fetchPersons();
 
     // Set up a listener to the prsService personChanged subject by calling subscribe(), for
     // listening to new values
+    // We have to set up the subscription BEFORE we send it (fetchPersons call)
     this.personListSubs = this.prsService.personsChanged.subscribe(persons => {
       this.personList = persons;
+      this.isFetching = false;
     });
+    this.isFetching = true;
+    this.prsService.fetchPersons();
   }
 
   ngOnDestroy() {
